@@ -14,7 +14,7 @@ import fuelFindStyles from './fuel-style.jsx';
  * View de Combustível (Fuel)
  * Renderiza a interface de combustíveis
  */
-function FuelFindView({ fuelRows, loading, error, codigo, descricao, onCodigoChange, onDescricaoChange, handlerSearch }) {
+function FuelFindView({ fuelRows, loading, error, codigo, descricao, onCodigoChange, onDescricaoChange, handlerSearch, handlerFuelNew, handlerClear, handlerDelete }) {
   const theme = useTheme();
   const isSmDown = useMediaQuery(theme.breakpoints.down('sm'));
   const styles = fuelFindStyles({ isSmDown, theme });
@@ -43,16 +43,24 @@ function FuelFindView({ fuelRows, loading, error, codigo, descricao, onCodigoCha
                   <Grid item xs={12} sm={6} md={4}>
                     <TextField fullWidth label="Descrição" size="small" value={descricao} onChange={onDescricaoChange} disabled={codigo !== null} />
                   </Grid>
-                  <Grid
-                    item
-                    xs={12}
-                    sm={12}
-                    md={4}
-                    sx={styles.filterGridRight}
-                  >
-                    <Button id="button-consulta" variant="contained" size="small" fullWidth sx={styles.applyButton} onClick={handlerSearch}>
-                      Aplicar
-                    </Button>
+                  <Grid item xs={12} sm={12} md={4} sx={styles.filterGridRight}>
+                    <Grid item xs={12} sm={12} md={4} sx={styles.filterGridRight}>
+                      <Button id="button-consulta" variant="contained" size="small" fullWidth sx={styles.applyButton} onClick={handlerSearch}>
+                        Aplicar
+                      </Button>
+                    </Grid>
+
+                    <Grid item xs={12} sm={12} md={4} sx={styles.filterGridRight}>
+                      <Button id="button-limpar" variant="contained" size="small" fullWidth sx={styles.applyButton} onClick={handlerClear}>
+                        Limpar
+                      </Button>
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={4} sx={styles.filterGridRight}>
+                      <Button id="button-novo" variant="contained" size="small" fullWidth sx={styles.applyButton} onClick={handlerFuelNew} algn="left">
+                        Novo
+                      </Button>
+                    </Grid>
+
                   </Grid>
                 </Grid>
               </Paper>
@@ -60,7 +68,7 @@ function FuelFindView({ fuelRows, loading, error, codigo, descricao, onCodigoCha
 
             <Grid item xs={12}>
               <Box sx={styles.dataBox}>
-                <DataGridFuel rows={fuelRows} loading={loading} error={error} autoHeight={isSmDown} />
+                <DataGridFuel rows={fuelRows} loading={loading} error={error} autoHeight={isSmDown} onDelete={handlerDelete} />
               </Box>
             </Grid>
         </Grid>
